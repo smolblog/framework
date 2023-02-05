@@ -1,13 +1,23 @@
 <?php
 
-namespace Smolblog\Framework;
-
-use Stringable;
+namespace Smolblog\Framework\Objects;
 
 /**
- * Represents an object that can be uniquely identified.
+ * Provides an Identifier property and extends SerializableKit to work with it.
+ *
+ * Entities are defined by their Identifier. This trait provides the readonly $id property and also extends the
+ * fromArray and toArray functions to serialize the identifier to and from a standard UUID string.
  */
-abstract class Entity extends Value implements Stringable {
+trait EntityKit {
+	use SerializableKit;
+
+	/**
+	 * Unique identifier (UUID) for this particular entity.
+	 *
+	 * @var Identifier
+	 */
+	public readonly Identifier $id;
+
 	/**
 	 * Create an instance of this class from an associative array. Assumes array keys map correctly to object
 	 * properties.
@@ -18,14 +28,6 @@ abstract class Entity extends Value implements Stringable {
 	public static function fromArray(array $data): static {
 		$dataWithIdentifier = [...$data, 'id' => Identifier::fromString($data['id'])];
 		return new static(...$dataWithIdentifier);
-	}
-
-	/**
-	 * Create the Entity. This constructor exists mostly for use by subclasses.
-	 *
-	 * @param Identifier $id Unique identification for this object.
-	 */
-	public function __construct(public readonly Identifier $id) {
 	}
 
 	/**
@@ -43,7 +45,7 @@ abstract class Entity extends Value implements Stringable {
 	 * @return array
 	 */
 	public function toArray(): array {
-		$fields = parent::toArray();
+		$fields = get_object_vars($this);
 		$fields['id'] = strval($this->id);
 		return $fields;
 	}
