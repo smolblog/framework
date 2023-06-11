@@ -2,10 +2,20 @@
 
 namespace Smolblog\Framework\Messages;
 
+use JsonSerializable;
+use Psr\EventDispatcher\StoppableEventInterface;
+use Smolblog\Framework\Objects\ArraySerializable;
+use Smolblog\Framework\Objects\SerializableKit;
+
 /**
- * Trait to help events easily implement AuthorizableMessage and/or StoppableEventInterface
+ * Messages are structured objects for passing data between different layers or domains.
+ *
+ * Messages are essentially Value objects except for being mutable. Properties should be readonly whenever possible,
+ * but messages themselves often have a need to be modified mid-flight, even if only to stop a message.
  */
-trait StoppableMessageKit {
+abstract class Message implements StoppableEventInterface, ArraySerializable, JsonSerializable {
+	use SerializableKit;
+
 	/**
 	 * True if message is stopped. Default false.
 	 *
