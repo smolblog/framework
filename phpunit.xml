@@ -1,0 +1,32 @@
+<phpunit
+	bootstrap="tests/_bootstrap.php"
+	colors="true"
+	testdox="true"
+>
+	<testsuites>
+		<testsuite name="core">
+			<directory>tests</directory>
+		</testsuite>
+		<testsuite name="framework">
+			<directory>tests/Framework</directory>
+		</testsuite>
+		<testsuite name="integration">
+			<directory>integration-tests</directory>
+		</testsuite>
+	</testsuites>
+	<coverage
+		cacheDirectory=".phpunit-cache"
+		ignoreDeprecatedCodeUnits="true"
+	>
+    <include>
+			<directory>src</directory>
+		</include>
+		<report>
+			<text outputFile="coverage.txt" />
+			<html outputDirectory="test-coverage" />
+		</report>
+	</coverage>
+	<php>
+		<ini name="xdebug.mode" value="coverage"/>
+	</php>
+</phpunit>
