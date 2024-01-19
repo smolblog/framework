@@ -24,10 +24,8 @@
     "nyholm/psr7": "^1.4"
   },
   "scripts": {
-    "test": "phpunit --testsuite core",
-    "test-coverage": "export XDEBUG_MODE=coverage; phpunit --testsuite core; cat coverage.txt",
-    "integration": "phpunit --testsuite integration",
-    "integration-coverage": "export XDEBUG_MODE=coverage; phpunit --testsuite integration; cat coverage.txt",
+    "test": "phpunit --testsuite framework",
+    "test-coverage": "export XDEBUG_MODE=coverage; phpunit --testsuite framework",
     "lint": "./vendor/squizlabs/php_codesniffer/bin/phpcs",
     "lintfix": "./vendor/squizlabs/php_codesniffer/bin/phpcbf"
   },

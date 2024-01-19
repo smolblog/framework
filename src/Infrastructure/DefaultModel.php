@@ -13,7 +13,6 @@ use Smolblog\Framework\ActivityPub\Signatures\MessageVerifier;
 use Smolblog\Framework\ActivityPub\ObjectGetter;
 use Smolblog\Framework\Messages\MessageBus;
 use Smolblog\Framework\Objects\DomainModel;
-use Smolblog\Markdown\SmolblogMarkdown;
 
 /**
  * Default model with services provided by the Framework.
@@ -26,7 +25,6 @@ class DefaultModel extends DomainModel {
 		ListenerRegistry::class => ['container' => ContainerInterface::class],
 		QueryMemoizationService::class => [],
 		SecurityCheckService::class => ['messageBus' => MessageBus::class],
-		SmolblogMarkdown::class => [],
 		KeypairGenerator::class => [],
 		LoggerInterface::class => NullLogger::class,
 		NullLogger::class => [],

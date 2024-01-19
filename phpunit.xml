@@ -4,14 +4,8 @@
 	testdox="true"
 >
 	<testsuites>
-		<testsuite name="core">
-			<directory>tests</directory>
-		</testsuite>
 		<testsuite name="framework">
-			<directory>tests/Framework</directory>
-		</testsuite>
-		<testsuite name="integration">
-			<directory>integration-tests</directory>
+			<directory>tests</directory>
 		</testsuite>
 	</testsuites>
 	<coverage
@@ -22,8 +16,9 @@
 			<directory>src</directory>
 		</include>
 		<report>
-			<text outputFile="coverage.txt" />
+			<text showOnlySummary="true" />
 			<html outputDirectory="test-coverage" />
+			<php outputFile="coverage.php" />
 		</report>
 	</coverage>
 	<php>
