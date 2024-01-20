@@ -8,6 +8,11 @@
       "Smolblog\\Framework\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Smolblog\\Test\\": "test-utils/"
+    }
+  },
   "authors": [
     {
       "name": "Smolblog",
@@ -25,7 +30,11 @@
   },
   "scripts": {
     "test": "phpunit --testsuite framework",
-    "test-coverage": "export XDEBUG_MODE=coverage; phpunit --testsuite framework",
+    "test-coverage": [
+      "@putenv XDEBUG_MODE=coverage",
+      "phpunit --testsuite framework",
+      "Smolblog\\Test\\CoverageReport::report"
+    ],
     "lint": "./vendor/squizlabs/php_codesniffer/bin/phpcs",
     "lintfix": "./vendor/squizlabs/php_codesniffer/bin/phpcbf"
   },

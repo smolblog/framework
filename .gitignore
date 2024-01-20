@@ -5,3 +5,4 @@
 coverage.txt
 test-coverage
 .DS_Store
+coverage.php
