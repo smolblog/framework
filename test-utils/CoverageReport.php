@@ -10,16 +10,17 @@ class CoverageReport {
 		$report = require __DIR__ . '/../coverage.php';
 		$baseDirCharCount = strlen(dirname(__DIR__) . '/src/');
 
-		$score = $report->getReport()->numberOfExecutedPaths() / $report->getReport()->numberOfExecutablePaths();
+		$score = $report->getReport()->numberOfExecutedBranches() / $report->getReport()->numberOfExecutableBranches();
 
-		echo 'Total coverage: ' . floor($score * 100) . "%\n";
+		echo "Expected branch coverage: 100%\n";
+		echo '  Actual branch coverage: ' . floor($score * 100) . "%\n";
 
 		if ($score >= 1) {
 			echo "PASS\n\n";
 			return;
 		}
 
-		echo "FAIL\n\nThe following files have incomplete code coverage:\n";
+		echo "\nThe following files have incomplete branch coverage:\n";
 		foreach(self::getProblemFiles($report->getReport()) as $file) {
 			echo '  ' . substr($file->pathAsString(), $baseDirCharCount) . "\n";
 		}
@@ -35,7 +36,7 @@ class CoverageReport {
 			fn($all, $subDir) => array_merge($all, self::getProblemFiles($subDir)),
 			array_filter(
 				$dir->files(),
-				fn($file) => ($file->numberOfExecutablePaths() - $file->numberOfExecutedPaths()) > 0
+				fn($file) => ($file->numberOfExecutableBranches() - $file->numberOfExecutedBranches()) > 0
 			),
 		);
 	}
@@ -44,7 +45,8 @@ class CoverageReport {
 		$output = $file->pathAsString() . ":\n";
 
 		foreach (array_filter($file->functions(), fn($fn) => $fn['coverage'] < 100) as $func) {
-			$output .= '  Function ' . $func['functionName'] . ': ' . ($func['executablePaths'] - $func['executedPaths']) . "\n";
+			$output .= '  Function ' . $func['functionName'] . ': ' . ($func['executable
+Branches'] - $func['executedBranches']) . "\n";
 		}
 		foreach (array_filter($file->traits(), fn($fn) => $fn['coverage'] < 100) as $trait) {
 			$output .= '  Trait ' . $trait['traitName'] . ":\n" . self::getMethodMessages($trait['methods']);
@@ -60,7 +62,8 @@ class CoverageReport {
 	private static function getMethodMessages(array $methods): string {
 		$output = '';
 		foreach (array_filter($methods, fn($mt) => $mt['coverage'] < 100) as $method) {
-			$output .= '    ' . $method['methodName'] . ': ' . ($method['executablePaths'] - $method['executedPaths']) . "\n";
+			$output .= '    ' . $method['methodName'] . ': ' . ($method['executable
+Branches'] - $method['executedBranches']) . "\n";
 		}
 
 		return $output;
